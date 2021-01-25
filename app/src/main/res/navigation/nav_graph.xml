@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loadingFragment">
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.fcossetta.pokedex.main.ui.LoadingFragment"
+        android:label="loadingFragment"
+        tools:layout="@layout/fragment_loading" />
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.fcossetta.pokedex.main.ui.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/main_to_pokemon_detail"
+            app:destination="@id/pokeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokeDetailFragment"
+        android:name="com.fcossetta.pokedex.main.ui.PokeDetailFragment"
+        android:label="PokeDetailFragment">
+        <action
+            android:id="@+id/returnToHome"
+            app:destination="@id/mainFragment2" />
+    </fragment>
+</navigation>
