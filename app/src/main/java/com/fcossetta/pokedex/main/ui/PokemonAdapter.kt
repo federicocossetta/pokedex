@@ -13,6 +13,7 @@ import com.fcossetta.pokedex.main.MainActivity
 import com.fcossetta.pokedex.main.data.PokemonViewModel
 import com.fcossetta.pokedex.main.data.PokemonViewState
 import com.fcossetta.pokedex.main.data.model.SimplePokemon
+import kotlinx.android.synthetic.main.fragment_pokemon_detail.view.*
 import kotlinx.android.synthetic.main.pokemon_item_list.view.*
 
 class PokemonAdapter() :
@@ -32,12 +33,16 @@ class PokemonAdapter() :
 
     class MyViewHolder(
         itemView: View,
-        var context: Context?
+        var context: Context?,
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(pokemon: SimplePokemon) {
 
-            itemView.name.text = pokemon.name
+            itemView.pokemon_name_compact.text = pokemon.name
+            val pokenumber = pokemon.url?.let {
+                it.substring(it.indexOf("pokemon/") + 8, pokemon.url.length - 1).padStart(3, '0')
+            }
+            itemView.pokemon_number_compact.text = "#$pokenumber"
             itemView.setOnClickListener {
                 if (pokemon.url != null && context != null) {
 
@@ -59,14 +64,14 @@ class PokemonAdapter() :
 class DiffUtilCallBack : DiffUtil.ItemCallback<SimplePokemon>() {
     override fun areItemsTheSame(
         oldItem: SimplePokemon,
-        newItem: SimplePokemon
+        newItem: SimplePokemon,
     ): Boolean {
         return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(
         oldItem: SimplePokemon,
-        newItem: SimplePokemon
+        newItem: SimplePokemon,
     ): Boolean {
         return oldItem == newItem
     }
