@@ -13,23 +13,35 @@ import io.uniflow.androidx.flow.AndroidDataFlow
 import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import retrofit2.await
 
 
 class PokemonViewModel(private val api: PokeService) :
     AndroidDataFlow(defaultState = UIState.Empty) {
 
+    fun findPokemon(fullUrl: String?) = action {
+        val response =
+            withContext(Dispatchers.IO) { api.retrivePokemonData(fullUrl).await() }
+        emitPokeDetail(response)
+
+    }
 
     fun pokemonDetail(idOrName: String) = action {
         val response =
             withContext(Dispatchers.IO) { api.getPokemon(idOrName).await() }
+        emitPokeDetail(response)
+
+    }
+
+    private fun emitPokeDetail(response: ResponseBody) {
         val rawPokemon: String? = response.string()
         if (rawPokemon != null) {
             val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             val adapter = moshi.adapter(Pokemon::class.java)
             val pokemon: Pokemon? = adapter.fromJson(rawPokemon)
             if (pokemon != null) {
-                setState { PokemonViewState.PokemonDetail(pokemon) }
+                action { sendEvent { PokemonEvent.PokemonFound(pokemon) } }
             }
         }
     }
@@ -37,9 +49,9 @@ class PokemonViewModel(private val api: PokeService) :
     fun getPokemonList(limit: Int) = action {
         val pager = Pager(
             config = PagingConfig(pageSize = 20, maxSize = 500), null,
-            pagingSourceFactory = { PagingSource(api,  limit) }
+            pagingSourceFactory = { PagingSource(api, limit) }
         )
-        setState(PokemonViewState.PokemonList(pager.flow.cachedIn(viewModelScope)))
+        sendEvent {(PokemonEvent.PokemonListFound(pager.flow.cachedIn(viewModelScope)))    }
     }
 }
 

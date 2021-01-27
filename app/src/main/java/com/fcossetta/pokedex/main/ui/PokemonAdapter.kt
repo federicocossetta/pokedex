@@ -1,23 +1,27 @@
 package com.fcossetta.pokedex.main.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.fcossetta.pokedex.R
+import com.fcossetta.pokedex.main.MainActivity
+import com.fcossetta.pokedex.main.data.PokemonViewModel
+import com.fcossetta.pokedex.main.data.PokemonViewState
 import com.fcossetta.pokedex.main.data.model.SimplePokemon
 import kotlinx.android.synthetic.main.pokemon_item_list.view.*
 
 class PokemonAdapter() :
     PagingDataAdapter<SimplePokemon, PokemonAdapter.MyViewHolder>(DiffUtilCallBack()) {
-
+    lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.pokemon_item_list, parent, false)
-        return MyViewHolder(view)
+        return MyViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -27,14 +31,26 @@ class PokemonAdapter() :
     }
 
     class MyViewHolder(
-        itemView: View
+        itemView: View,
+        var context: Context?
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(character: SimplePokemon) {
+        fun bind(pokemon: SimplePokemon) {
 
-            itemView.name.text = character.name
+            itemView.name.text = pokemon.name
             itemView.setOnClickListener {
+                if (pokemon.url != null && context != null) {
 
+                    val pokemonViewModel =
+                        ViewModelProviders.of(context as MainActivity)[PokemonViewModel::class.java]
+                    pokemonViewModel.action {
+                        setState {
+                            PokemonViewState.PokemonDetailRequest(
+                                pokemon.url
+                            )
+                        }
+                    }
+                }
             }
         }
     }

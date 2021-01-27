@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.fcossetta.pokedex.R
+import com.fcossetta.pokedex.main.data.PokemonEvent
 import com.fcossetta.pokedex.main.data.PokemonViewModel
-import com.fcossetta.pokedex.main.data.PokemonViewState
-import io.uniflow.androidx.flow.onStates
+import io.uniflow.androidx.flow.onEvents
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
     val TAG = "TEST"
 
     private val viewModel: PokemonViewModel by sharedViewModel()
-    private var adapter = PokemonAdapter()
+    private val adapter = PokemonAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +32,15 @@ class MainFragment : Fragment() {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter.context = requireContext()
         recycler_view.adapter = adapter
-        onStates(viewModel) { state ->
-            when (state) {
-                is PokemonViewState.PokemonList -> lifecycleScope.launch {
-                    state.pokemon.collectLatest { adapter.submitData(it) }
+        onEvents(viewModel) {
+            when (val event = it.take()) {
+                is PokemonEvent.PokemonListFound -> lifecycleScope.launch {
+                    event.pokemon.collectLatest { adapter.submitData(it) }
                 }
             }
         }
-        viewModel.getPokemonList(100)
     }
 
 }

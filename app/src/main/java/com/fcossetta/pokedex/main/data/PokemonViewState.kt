@@ -7,9 +7,10 @@ import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.flow.Flow
 
 open class PokemonViewState : UIState() {
-    data class PokemonDetail(val pokemon: Pokemon) :
-        PokemonViewState()
 
     data class PokemonList(val pokemon: Flow<PagingData<SimplePokemon>>) :
+        PokemonViewState()
+
+    data class PokemonDetailRequest(val pokemon: String) :
         PokemonViewState()
 }

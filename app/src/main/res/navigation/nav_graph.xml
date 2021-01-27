@@ -10,13 +10,17 @@
         android:label="loadingFragment"
         tools:layout="@layout/fragment_loading" />
     <fragment
-        android:id="@+id/mainFragment2"
+        android:id="@+id/mainFragment"
         android:name="com.fcossetta.pokedex.main.ui.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/main_to_pokemon_detail"
-            app:destination="@id/pokeDetailFragment" />
+            app:destination="@id/pokeDetailFragment">
+            <argument
+                android:name="pokemon"
+                app:argType="com.fcossetta.pokedex.main.data.model.Pokemon" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/pokeDetailFragment"
@@ -24,6 +28,6 @@
         android:label="PokeDetailFragment">
         <action
             android:id="@+id/returnToHome"
-            app:destination="@id/mainFragment2" />
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

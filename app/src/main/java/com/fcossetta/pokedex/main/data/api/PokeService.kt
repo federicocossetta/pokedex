@@ -5,6 +5,10 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
+
+
+
 
 interface PokeService {
 
@@ -13,4 +17,7 @@ interface PokeService {
 
     @GET("/api/v2/pokemon")
      fun getPokemonList(@Query("limit") limit: Int, @Query("offset") offset: Int): Call<ResponseBody>
+
+    @GET
+    fun retrivePokemonData(@Url url: String?): Call<ResponseBody>
 }

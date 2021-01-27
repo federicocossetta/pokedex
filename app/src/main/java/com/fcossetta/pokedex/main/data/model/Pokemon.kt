@@ -2,6 +2,7 @@ package com.fcossetta.pokedex.main.data.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 
 @JsonClass(generateAdapter = true)
@@ -18,7 +19,10 @@ data class Pokemon(
     val weight: Int? = null,
     @Json(name = "stats")
     val stats: List<StatInfo>? = null,
-)
+    @Json(name = "sprites")
+    val sprites: Sprite? = null,
+
+    ) : Serializable
 
 @JsonClass(generateAdapter = true)
 data class Stat(
@@ -37,6 +41,13 @@ data class StatInfo(
     @Json(name = "stat")
     val stat: Stat? = null
 )
+
+@JsonClass(generateAdapter = true)
+data class Sprite(
+    @Json(name = "front_default")
+    val front_default: String? = null,
+)
+
 
 @JsonClass(generateAdapter = true)
 data class Type(
