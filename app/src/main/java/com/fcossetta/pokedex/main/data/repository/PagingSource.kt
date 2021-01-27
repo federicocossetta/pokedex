@@ -7,7 +7,6 @@ import com.fcossetta.pokedex.main.data.model.SimplePokemon
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.flow.flow
 import retrofit2.await
 
 class PagingSource(
