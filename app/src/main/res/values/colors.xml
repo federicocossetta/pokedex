@@ -3,11 +3,9 @@
     <color name="red_light">#ff6c3d</color>
     <color name="red_primary">#E3350D</color>
     <color name="red_dark">#a90000</color>
-    <color name="gray_secondary">#424242</color>
-    <color name="gray_secondary_light">#6d6d6d</color>
-    <color name="gray_secondary_dark">#1b1b1b</color>
+    <color name="gray_secondary">#a4a4a4</color>
+    <color name="gray_secondary_light">#d5d5d5</color>
+    <color name="gray_secondary_dark">#757575</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_gray">#D8D7D7</color>
-    <color name="dark_gray">#757373</color>
 </resources>

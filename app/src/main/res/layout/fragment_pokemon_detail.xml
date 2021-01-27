@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
@@ -10,7 +11,7 @@
         android:id="@+id/pokemon_name_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,20 +41,99 @@
         android:id="@+id/card_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_margin="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="35dp"
         android:elevation="10dp"
-        app:cardBackgroundColor="@color/light_gray"
+        app:cardBackgroundColor="@color/gray_secondary_light"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
+        app:contentPadding="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pokemon_name_container">
 
-        <ImageView
-            android:id="@+id/pokemon_image"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/pokemon_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/height_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/height"
+                android:layout_alignEnd="@+id/pokemon_image"
+                android:text="@string/height" />
+
+            <TextView
+                android:id="@+id/weight_title"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/weight"
+                android:layout_alignStart="@+id/pokemon_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/weight" />
+
+            <TextView
+                android:id="@+id/height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/height_title"
+                android:layout_alignEnd="@+id/height_title"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                tools:text="12" />
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/weight_title"
+                android:layout_alignEnd="@+id/weight_title"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                tools:text="12" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/types_title"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:text="@string/types"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_image" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/types_flow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="10dp"
+        app:flow_horizontalGap="10dp"
+        app:flow_maxElementsWrap="2"
+        app:flow_verticalGap="10dp"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/types_title">
+
+    </androidx.constraintlayout.helper.widget.Flow>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/stats_container"
@@ -61,13 +141,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="35dp"
         android:elevation="10dp"
-        app:cardBackgroundColor="@color/dark_gray"
+        app:cardBackgroundColor="@color/gray_secondary"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_image">
+        app:layout_constraintTop_toBottomOf="@+id/types_flow">
 
         <RelativeLayout
             android:layout_width="match_parent"

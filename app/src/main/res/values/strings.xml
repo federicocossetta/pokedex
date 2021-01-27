@@ -9,4 +9,8 @@
     <string name="spattack">Special attack</string>
     <string name="spcdefense">Special defense</string>
     <string name="speed">Speed</string>
+    <string name="types">Types</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="category">Category</string>
 </resources>

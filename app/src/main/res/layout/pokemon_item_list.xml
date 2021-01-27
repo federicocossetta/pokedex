@@ -30,7 +30,7 @@
                 tools:text="#001" />
 
             <TextView
-                android:background="@color/light_gray"
+                android:background="@color/gray_secondary_light"
                 android:id="@+id/pokemon_name_compact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

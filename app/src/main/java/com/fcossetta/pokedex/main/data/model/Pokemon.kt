@@ -21,6 +21,8 @@ data class Pokemon(
     val stats: List<StatInfo>? = null,
     @Json(name = "sprites")
     val sprites: Sprite? = null,
+    @Json(name = "types")
+    val types: List<Type>? = null,
 
     ) : Serializable
 
@@ -39,7 +41,7 @@ data class StatInfo(
     @Json(name = "effort")
     val effort: Int? = null,
     @Json(name = "stat")
-    val stat: Stat? = null
+    val stat: Stat? = null,
 )
 
 @JsonClass(generateAdapter = true)
@@ -54,8 +56,13 @@ data class Type(
     @Json(name = "slot")
     val slot: String? = null,
     @Json(name = "type")
-    val typeDetail: List<TypeDetail>? = null
+    val typeDetail: TypeDetail? = null,
 )
 
 @JsonClass(generateAdapter = true)
-data class TypeDetail(val name: String? = null, val url: String? = null)
+data class TypeDetail(
+    @Json(name = "name")
+    val name: String? = null,
+    @Json(name = "url")
+    val url: String? = null,
+)
