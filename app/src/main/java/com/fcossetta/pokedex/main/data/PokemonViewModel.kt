@@ -27,13 +27,6 @@ class PokemonViewModel(private val api: PokeService) :
 
     }
 
-    fun pokemonDetail(idOrName: String) = action {
-        val response =
-            withContext(Dispatchers.IO) { api.getPokemon(idOrName).await() }
-        emitPokeDetail(response)
-
-    }
-
     private fun emitPokeDetail(response: ResponseBody) {
         val rawPokemon: String? = response.string()
         if (rawPokemon != null) {
