@@ -16,14 +16,17 @@ class PagingSource(
         var values: List<SimplePokemon> = emptyList()
         try {
             if (params.key != null) {
-                val test = params.key?.minus(2) ?: 0 * limit;
-                val result = api.getPokemonList(limit, test).await()
-                val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                val adapter: JsonAdapter<PokemonResult>? = moshi.adapter(PokemonResult::class.java)
-                val jsonString = result.string()
-                val fromJson = adapter?.fromJson(jsonString)
-                if (fromJson?.results != null)
-                    values = fromJson.results
+                val test = params.key?.minus(2)?.times(limit);
+                if(test != null) {
+                    val result = api.getPokemonList(limit, test).await()
+                    val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+                    val adapter: JsonAdapter<PokemonResult>? =
+                        moshi.adapter(PokemonResult::class.java)
+                    val jsonString = result.string()
+                    val fromJson = adapter?.fromJson(jsonString)
+                    if (fromJson?.results != null)
+                        values = fromJson.results
+                }
             }
         } catch (e: Exception) {
             Error("Error", e)

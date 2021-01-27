@@ -13,7 +13,6 @@ import com.fcossetta.pokedex.main.MainActivity
 import com.fcossetta.pokedex.main.data.PokemonViewModel
 import com.fcossetta.pokedex.main.data.PokemonViewState
 import com.fcossetta.pokedex.main.data.model.SimplePokemon
-import kotlinx.android.synthetic.main.fragment_pokemon_detail.view.*
 import kotlinx.android.synthetic.main.pokemon_item_list.view.*
 
 class PokemonAdapter() :

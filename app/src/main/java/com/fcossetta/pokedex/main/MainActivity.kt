@@ -9,6 +9,7 @@ import com.fcossetta.pokedex.R
 import com.fcossetta.pokedex.main.data.PokemonEvent
 import com.fcossetta.pokedex.main.data.PokemonViewModel
 import com.fcossetta.pokedex.main.data.PokemonViewState
+import com.fcossetta.pokedex.main.ui.LoadingFragmentDirections
 import com.fcossetta.pokedex.main.ui.MainFragmentDirections
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
@@ -45,10 +46,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(mainToPokemonDetail)
 
                 }
-                is PokemonEvent.PokemonListFound ->
-                    navController.navigate(R.id.mainFragment)
+                is PokemonEvent.PokemonListFound -> {
+                    val actionLoadingToMain = LoadingFragmentDirections.actionLoadingToMain()
+                    navController.navigate(actionLoadingToMain)
+                }
             }
-        }
 
+        }
     }
 }
