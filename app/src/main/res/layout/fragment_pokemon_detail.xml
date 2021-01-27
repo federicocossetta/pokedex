@@ -58,7 +58,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/stats_container"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_margin="35dp"
         android:elevation="10dp"
         app:cardBackgroundColor="@color/dark_gray"
@@ -71,21 +71,144 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/stats_title"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="10dp"
                 android:text="@string/stats"
                 android:textColor="@android:color/white" />
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/stats_lables"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/stats_title" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stats_title"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/hp_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/hp"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/attack_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/hp_title"
+                    android:text="@string/attack"
+                    android:textColor="@android:color/white" />
+
+
+                <TextView
+                    android:id="@+id/defense_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/attack_title"
+                    android:text="@string/defense"
+                    android:textColor="@android:color/white" />
+
+
+                <TextView
+                    android:id="@+id/sp_attack_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/defense_title"
+                    android:text="@string/spattack"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/special_defense_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sp_attack_title"
+                    android:text="@string/spcdefense"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/speed_title"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/special_defense_title"
+                    android:text="@string/speed"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/hp"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/attack"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/hp"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="100" />
+
+                <TextView
+                    android:id="@+id/defense"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/attack"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="100" />
+
+                <TextView
+                    android:id="@+id/special_attack"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/defense"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="110" />
+
+                <TextView
+                    android:id="@+id/special_defense"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/special_attack"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="255" />
+
+                <TextView
+                    android:id="@+id/speed"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/special_defense"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@android:color/white"
+                    tools:text="255" />
+            </RelativeLayout>
+
         </RelativeLayout>
+
 
     </androidx.cardview.widget.CardView>
 

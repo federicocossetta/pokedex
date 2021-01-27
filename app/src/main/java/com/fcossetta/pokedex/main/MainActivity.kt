@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         onEvents(viewModel) {
             when (val event = it.peek()) {
                 is PokemonEvent.PokemonFound -> {
-//                    navController.navigate(R.id.main_to_pokemon_detail)
                     val mainToPokemonDetail =
                         MainFragmentDirections.mainToPokemonDetail(event.pokemon)
                     navController.navigate(mainToPokemonDetail)
