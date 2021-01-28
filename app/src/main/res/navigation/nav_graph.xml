@@ -23,6 +23,8 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/main_to_pokemon_detail"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
             app:destination="@id/pokeDetailFragment">
             <argument
                 android:name="pokemon"
