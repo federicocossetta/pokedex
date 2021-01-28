@@ -1,4 +1,4 @@
-package com.fcossetta.pokedex.main.utils
+package com.fcossetta.pokedex.main.data.di
 
 import androidx.room.Room
 import com.fcossetta.pokedex.main.data.PokemonViewModel

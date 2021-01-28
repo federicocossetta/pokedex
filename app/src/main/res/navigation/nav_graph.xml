@@ -23,18 +23,20 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/main_to_pokemon_detail"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
             app:destination="@id/pokeDetailFragment">
-            <argument
-                android:name="pokemon"
-                app:argType="com.fcossetta.pokedex.main.data.model.Pokemon" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/pokeDetailFragment"
         android:name="com.fcossetta.pokedex.main.ui.PokeDetailFragment"
         android:label="PokeDetailFragment">
+
         <action
             android:id="@+id/returnToHome"
+            app:popUpTo="@+id/mainFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/mainFragment" />
     </fragment>
 </navigation>
