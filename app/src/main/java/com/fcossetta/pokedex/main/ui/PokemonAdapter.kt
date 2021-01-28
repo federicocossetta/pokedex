@@ -36,8 +36,9 @@ class PokemonAdapter() :
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(pokemon: SimplePokemon) {
-
-            itemView.pokemon_name_compact.text = pokemon.name
+            pokemon.name?.let {
+                itemView.pokemon_name_compact.text = it.capitalize()
+            }
             val pokenumber = pokemon.url?.let {
                 it.substring(it.indexOf("pokemon/") + 8, pokemon.url.length - 1).padStart(3, '0')
             }
@@ -59,6 +60,7 @@ class PokemonAdapter() :
         }
     }
 }
+
 
 class DiffUtilCallBack : DiffUtil.ItemCallback<SimplePokemon>() {
     override fun areItemsTheSame(
