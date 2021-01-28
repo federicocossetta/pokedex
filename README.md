@@ -1,4 +1,4 @@
-#Stable version 1.0
+# Stable version 1.0
 Implementation of simple pokedx using
 * Kotlin
 * Uniflow
