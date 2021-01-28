@@ -14,25 +14,24 @@ import com.fcossetta.pokedex.main.ui.MainFragmentDirections
 import com.fcossetta.pokedex.main.utils.NetworkListener
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private var recover: Boolean = false
     private lateinit var navController: NavController
+    private lateinit var networkListener: NetworkListener
 
     val TAG = "TEST"
 
     private val viewModel: PokemonViewModel by viewModel()
-    private val networkListener: NetworkListener by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         navController = navHostFragment.navController
+        networkListener = NetworkListener(applicationContext, viewModel)
         onStates(viewModel) { state ->
             if (networkListener.online) {
                 when (state) {
@@ -46,24 +45,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         onEvents(viewModel) { it ->
-                when (val peek = it.take()) {
-                    is PokemonEvent.PokemonFound -> {
-                            it.take()
-                            val mainToPokemonDetail =
-                                MainFragmentDirections.mainToPokemonDetail()
-                            navController.navigate(mainToPokemonDetail)
-                    }
-                    is PokemonEvent.PokemonDetailRequest -> {
-
-                            it.take()
-                            viewModel.findPokemon(peek.pokemonUrl)
-                    }
-                    is PokemonEvent.PokemonListFound -> {
-                        val mainToPokemonDetail =
-                            LoadingFragmentDirections.actionLoadingToMain()
-                        navController.navigate(mainToPokemonDetail)
-                    }
+            when (val peek = it.take()) {
+                is PokemonEvent.PokemonFound -> {
+                    it.take()
+                    val mainToPokemonDetail =
+                        MainFragmentDirections.mainToPokemonDetail()
+                    navController.navigate(mainToPokemonDetail)
                 }
+                is PokemonEvent.PokemonDetailRequest -> {
+
+                    it.take()
+                    viewModel.findPokemon(peek.pokemonUrl)
+                }
+                is PokemonEvent.PokemonListFound -> {
+                    val mainToPokemonDetail =
+                        LoadingFragmentDirections.actionLoadingToMain()
+                    navController.navigate(mainToPokemonDetail)
+                }
+            }
         }
     }
 
