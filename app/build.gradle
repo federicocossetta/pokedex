@@ -2,14 +2,16 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
+    buildFeatures {
+        viewBinding true
+    }
     defaultConfig {
         applicationId "com.fcossetta.pokedex"
         minSdkVersion 21
@@ -78,7 +80,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$support_lib_version"
     implementation "androidx.arch.core:core-testing:$android_arch_version"
     implementation "androidx.room:room-runtime:$room_version"
-
+    kapt "android.arch.persistence.room:compiler:1.1.1"
     //Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
     implementation "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"

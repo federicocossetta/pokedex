@@ -12,17 +12,15 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fcossetta.pokedex.R
-import com.fcossetta.pokedex.main.data.PokemonViewModel
 import com.fcossetta.pokedex.main.data.model.Pokemon
 import com.fcossetta.pokedex.main.data.model.StatInfo
-import com.fcossetta.pokedex.main.data.model.Type
+import com.fcossetta.pokedex.main.data.model.PokemonType
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class PokeDetailFragment : Fragment() {
-    private val viewModel: PokemonViewModel by sharedViewModel()
     // TODO: Rename and change types of parameters
 
     override fun onCreateView(
@@ -50,6 +48,7 @@ class PokeDetailFragment : Fragment() {
             pokemon_number.text = "#$padStart"
             Glide.with(context)
                 .load(pokemon.sprites?.front_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(pokemon_image)
             if (pokemon.stats != null) {
                 for (item: StatInfo in pokemon.stats) {
@@ -66,9 +65,9 @@ class PokeDetailFragment : Fragment() {
             }
             pokemon.weight?.let { weight.text = it.toString() }
             pokemon.height?.let { height.text = it.toString() }
-            if (pokemon.types != null) {
+            if (pokemon.pokemonTypes != null) {
                 val ids = mutableListOf<Int>()
-                for (item: Type in pokemon.types) {
+                for (item: PokemonType in pokemon.pokemonTypes) {
 
                     val cardView = CardView(context)
                     cardView.id = View.generateViewId()

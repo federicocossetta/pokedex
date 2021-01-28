@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 open class PokemonEvent : UIEvent() {
     data class PokemonFound(val pokemon: Pokemon) :
         PokemonEvent()
+    data class PokemonFromCache(val pokemon: Pokemon) :
+        PokemonEvent()
     data class PokemonListFound(val pokemon: Flow<PagingData<SimplePokemon>>) :
         PokemonEvent()
 

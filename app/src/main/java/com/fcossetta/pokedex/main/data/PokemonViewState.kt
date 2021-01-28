@@ -10,6 +10,8 @@ open class PokemonViewState : UIState() {
     data class PokemonList(val pokemon: Flow<PagingData<SimplePokemon>>) :
         PokemonViewState()
 
-    data class PokemonDetailRequest(val pokemon: String) :
+    data class PokemonDetailRequest(val pokemonUrl: String) :
         PokemonViewState()
+
+    data class networkState(val online: Boolean) : PokemonViewState()
 }
