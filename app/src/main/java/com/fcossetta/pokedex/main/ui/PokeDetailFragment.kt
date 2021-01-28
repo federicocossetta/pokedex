@@ -13,17 +13,18 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fcossetta.pokedex.R
+import com.fcossetta.pokedex.main.data.PokemonEvent
 import com.fcossetta.pokedex.main.data.PokemonViewModel
 import com.fcossetta.pokedex.main.data.model.Pokemon
 import com.fcossetta.pokedex.main.data.model.StatInfo
 import com.fcossetta.pokedex.main.data.model.Type
+import io.uniflow.androidx.flow.onEvents
 import kotlinx.android.synthetic.main.fragment_pokemon_detail.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class PokeDetailFragment : Fragment() {
     private val viewModel: PokemonViewModel by sharedViewModel()
-    // TODO: Rename and change types of parameters
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,16 +36,21 @@ class PokeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pokemon: Pokemon? = arguments?.get("pokemon") as Pokemon?
-
-        context?.let { updatePokemonInformation(pokemon, it) }
+        onEvents(viewModel) { it ->
+            when (val take = it.peek()) {
+                is PokemonEvent.PokemonFound -> {
+                    it.take()
+                    updatePokemonInformation(take.pokemon, context)
+                }
+            }
+        }
 
 
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updatePokemonInformation(pokemon: Pokemon?, context: Context) {
-        if (pokemon != null) {
+    private fun updatePokemonInformation(pokemon: Pokemon?, context: Context?) {
+        if (pokemon != null && context != null) {
             pokemon_name.text = pokemon.name?.capitalize(Locale.ROOT)
             val padStart = pokemon.id.toString().padStart(3, '0')
             pokemon_number.text = "#$padStart"
