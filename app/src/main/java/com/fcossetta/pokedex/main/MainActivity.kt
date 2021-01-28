@@ -1,28 +1,31 @@
 package com.fcossetta.pokedex.main
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fcossetta.pokedex.R
+import com.fcossetta.pokedex.main.data.NetworkState
 import com.fcossetta.pokedex.main.data.PokemonEvent
 import com.fcossetta.pokedex.main.data.PokemonViewModel
-import com.fcossetta.pokedex.main.data.PokemonViewState
 import com.fcossetta.pokedex.main.ui.LoadingFragmentDirections
 import com.fcossetta.pokedex.main.ui.MainFragmentDirections
+import com.fcossetta.pokedex.main.utils.NetworkListener
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.data.UIState
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private var recover: Boolean = false
     private lateinit var navController: NavController
 
     val TAG = "TEST"
 
     private val viewModel: PokemonViewModel by viewModel()
+    private val networkListener: NetworkListener by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,27 +34,38 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         navController = navHostFragment.navController
         onStates(viewModel) { state ->
-            Log.d(TAG, state.toString());
-            when (state) {
-                is UIState.Empty -> viewModel.getPokemonList(100)
-                is PokemonViewState.PokemonDetailRequest -> viewModel.findPokemon(state.pokemon)
+            if (networkListener.online) {
+                when (state) {
+                    is NetworkState.NetworkChanged -> if (state.online) {
+                        viewModel.getPokemonList(100)
+                    }
+                }
+            } else {
+                Toast.makeText(applicationContext, R.string.offline, Toast.LENGTH_SHORT).show()
+                recover = true;
             }
         }
+        onEvents(viewModel) { it ->
+                when (val peek = it.take()) {
+                    is PokemonEvent.PokemonFound -> {
+                            it.take()
+                            val mainToPokemonDetail =
+                                MainFragmentDirections.mainToPokemonDetail()
+                            navController.navigate(mainToPokemonDetail)
+                    }
+                    is PokemonEvent.PokemonDetailRequest -> {
 
-        onEvents(viewModel) {
-            when (val event = it.peek()) {
-                is PokemonEvent.PokemonFound -> {
-                    val mainToPokemonDetail =
-                        MainFragmentDirections.mainToPokemonDetail(event.pokemon)
-                    navController.navigate(mainToPokemonDetail)
-
+                            it.take()
+                            viewModel.findPokemon(peek.pokemonUrl)
+                    }
+                    is PokemonEvent.PokemonListFound -> {
+                        val mainToPokemonDetail =
+                            LoadingFragmentDirections.actionLoadingToMain()
+                        navController.navigate(mainToPokemonDetail)
+                    }
                 }
-                is PokemonEvent.PokemonListFound -> {
-                    val actionLoadingToMain = LoadingFragmentDirections.actionLoadingToMain()
-                    navController.navigate(actionLoadingToMain)
-                }
-            }
-
         }
     }
+
+
 }

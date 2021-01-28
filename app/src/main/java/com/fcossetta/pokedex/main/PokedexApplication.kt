@@ -1,8 +1,9 @@
 package com.fcossetta.pokedex.main
 
 import android.app.Application
-import com.fcossetta.pokedex.main.data.api.networkModule
-import com.fcossetta.pokedex.main.utils.myModule
+import com.fcossetta.pokedex.main.data.di.NetworkReactModule
+import com.fcossetta.pokedex.main.data.di.myModule
+import com.fcossetta.pokedex.main.data.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +14,7 @@ class PokedexApplication : Application() {
 
         startKoin {
             androidContext(this@PokedexApplication.applicationContext)
-            modules(listOf(networkModule, myModule))
+            modules(listOf(networkModule, myModule, NetworkReactModule))
         }
     }
 }

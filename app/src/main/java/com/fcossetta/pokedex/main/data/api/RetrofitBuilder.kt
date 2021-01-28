@@ -6,11 +6,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-val networkModule = module {
-    single { provideDefaultOkhttpClient() }
-    single { provideRetrofit(client = get()) }
-    single { provideApi(get()) }
-}
 
 fun provideDefaultOkhttpClient(): OkHttpClient {
     val logging = HttpLoggingInterceptor()
